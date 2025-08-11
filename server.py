@@ -12,7 +12,7 @@ LICENSE_DAYS = 30  # Срок действия лицензии
 GRACE_DAYS = 5     # Период ожидания после окончания
 
 # Подключение к Google Sheets
-SERVICE_ACCOUNT_FILE = "licenseserver-468712-9457b67a044f.json"  # Файл с твоими данными
+SERVICE_ACCOUNT_FILE = "service_account.json"  # Файл с твоими данными
 SPREADSHEET_NAME = "licenses"                  # Имя таблицы
 SHEET = None
 
