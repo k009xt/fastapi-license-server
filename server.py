@@ -17,10 +17,10 @@ SHEET = None
 
 def connect_sheet():
     global SHEET
-    raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
+    raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON_B64")
     if not raw:
-        raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON is not set")
-    service_account_info = json.loads(raw)
+        raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON_B64 is not set")
+    service_account_info = json.loads(base64.b64decode(raw).decode("utf-8"))
     creds = Credentials.from_service_account_info(
         service_account_info,
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
