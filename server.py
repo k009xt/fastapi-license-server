@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import gspread
 from google.oauth2.service_account import Credentials
+import json
 
 # ====== Настройки ======
 API_KEY = "SUPER_SECRET_ADMIN_KEY_12345"  # Ключ для админских операций
@@ -18,8 +19,9 @@ SHEET = None
 
 def connect_sheet():
     global SHEET
-    creds = Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE,
+    service_account_info = json.loads(os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON"))
+    creds = Credentials.from_service_account_info(
+        service_account_info,
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
     client = gspread.authorize(creds)
