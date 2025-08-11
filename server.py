@@ -6,14 +6,14 @@ from pydantic import BaseModel
 import gspread
 from google.oauth2.service_account import Credentials
 
-# ====== Настройки ======
-API_KEY = "SUPER_SECRET_ADMIN_KEY_12345"  # Ключ для админских операций
-LICENSE_DAYS = 30  # Срок действия лицензии
-GRACE_DAYS = 5     # Период ожидания после окончания
+# ====== ГЌГ Г±ГІГ°Г®Г©ГЄГЁ ======
+API_KEY = "SUPER_SECRET_ADMIN_KEY_12345"  # ГЉГ«ГѕГ· Г¤Г«Гї Г Г¤Г¬ГЁГ­Г±ГЄГЁГµ Г®ГЇГҐГ°Г Г¶ГЁГ©
+LICENSE_DAYS = 30  # Г‘Г°Г®ГЄ Г¤ГҐГ©Г±ГІГўГЁГї Г«ГЁГ¶ГҐГ­Г§ГЁГЁ
+GRACE_DAYS = 5     # ГЏГҐГ°ГЁГ®Г¤ Г®Г¦ГЁГ¤Г Г­ГЁГї ГЇГ®Г±Г«ГҐ Г®ГЄГ®Г­Г·Г Г­ГЁГї
 
-# Подключение к Google Sheets
-SERVICE_ACCOUNT_FILE = "service_account.json"  # Файл с твоими данными
-SPREADSHEET_NAME = "licenses"                  # Имя таблицы
+# ГЏГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГЄ Google Sheets
+SERVICE_ACCOUNT_FILE = "licenseserver-468712-9457b67a044f.json"  # Г”Г Г©Г« Г± ГІГўГ®ГЁГ¬ГЁ Г¤Г Г­Г­Г»Г¬ГЁ
+SPREADSHEET_NAME = "licenses"                  # Г€Г¬Гї ГІГ ГЎГ«ГЁГ¶Г»
 SHEET = None
 
 def connect_sheet():
@@ -25,7 +25,7 @@ def connect_sheet():
     client = gspread.authorize(creds)
     SHEET = client.open(SPREADSHEET_NAME).sheet1
 
-# ====== Модели ======
+# ====== ГЊГ®Г¤ГҐГ«ГЁ ======
 class RegisterRequest(BaseModel):
     product_name: str
 
@@ -38,7 +38,7 @@ class UpdateRequest(BaseModel):
     client_id: str
     extra_days: int
 
-# ====== Запуск ======
+# ====== Г‡Г ГЇГіГ±ГЄ ======
 app = FastAPI()
 
 @app.on_event("startup")
@@ -52,7 +52,7 @@ def register(data: RegisterRequest):
     license_key = str(uuid.uuid4())
     expires_at = (datetime.datetime.utcnow() + datetime.timedelta(days=LICENSE_DAYS)).strftime("%Y-%m-%d")
 
-    # Запись в таблицу
+    # Г‡Г ГЇГЁГ±Гј Гў ГІГ ГЎГ«ГЁГ¶Гі
     SHEET.append_row([client_id, license_key, data.product_name, expires_at])
 
     return {
