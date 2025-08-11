@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import gspread
 from google.oauth2.service_account import Credentials
+import base64
 
 # ====== Конфигурация ======
 API_KEY = os.getenv("ADMIN_API_KEY", "SUPER_SECRET_ADMIN_KEY_12345")
