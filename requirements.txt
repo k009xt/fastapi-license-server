@@ -2,3 +2,4 @@ fastapi
 uvicorn[standard]
 gspread
 google-auth
+base64
