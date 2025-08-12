@@ -20,6 +20,7 @@ def connect_sheet():
     raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
     if not raw:
         raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON is not set")
+    print("Raw JSON:", raw)  # Добавьте эту строку для отладки
     service_account_info = json.loads(raw)
     creds = Credentials.from_service_account_info(
         service_account_info,
