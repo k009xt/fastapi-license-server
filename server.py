@@ -6,7 +6,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import gspread
 from google.oauth2.service_account import Credentials
-import base64
 
 # ====== Конфигурация ======
 API_KEY = os.getenv("ADMIN_API_KEY", "SUPER_SECRET_ADMIN_KEY_12345")
@@ -18,10 +17,10 @@ SHEET = None
 
 def connect_sheet():
     global SHEET
-    raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON_B64")
+    raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
     if not raw:
-        raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON_B64 is not set")
-    service_account_info = json.loads(base64.b64decode(raw).decode("utf-8"))
+        raise RuntimeError("GOOGLE_SERVICE_ACCOUNT_JSON is not set")
+    service_account_info = json.loads(raw)
     creds = Credentials.from_service_account_info(
         service_account_info,
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
